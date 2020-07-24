@@ -1,28 +1,29 @@
 import * as Phaser from "phaser";
-import { GameScene } from "./scenes/Scene1";
+import { GAME_TITLE, SCREEN_WIDTH, SCREEN_HEIGHT } from "./const";
+import { TitleScene } from "./scenes/TitleScene";
+import { GameScene } from "./scenes/GameScene";
+
+const BGCOLOR = "#000000";
+const PARENT = "game";
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-    title: "Sample",
+    title: GAME_TITLE,
     type: Phaser.AUTO,
-    parent: "game",
-    backgroundColor: "#000000",
-
-    width: 960,
-    height: 540,
-
+    parent: PARENT,
+    backgroundColor: BGCOLOR,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
-
     physics: {
         default: "arcade",
         arcade: {
             debug: true,
         },
     },
-
-    scene: GameScene,
+    scene: [TitleScene, GameScene],
 };
 
 export const game = new Phaser.Game(gameConfig);
