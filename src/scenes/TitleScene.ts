@@ -13,20 +13,24 @@ export class TitleScene extends Phaser.Scene {
     super(sceneConfig);
   }
 
+  public preload() {}
+
   public create() {
-    this.text = this.add.text(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, "Push any key.", {
+    this.showPushAnyKeyText();
+
+    // this.input.keyboard.once("keyup", (e) => {
+    //   this.scene.start("Game");
+    // });
+    this.scene.start("Game");
+  }
+
+  private showPushAnyKeyText() {
+    const txt = "Push any key.";
+    this.text = this.add.text(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100, txt, {
       fontSize: "24px",
       fontFamily: FONT_10,
     });
     this.text.setAlign("center").setOrigin(0.5);
-
-    this.physics.add.existing(this.text);
-
-    this.input.keyboard.once("keyup", (e) => {
-      console.log("NEXT");
-      this.scene.start("Game");
-    });
+    this.add.existing(this.text);
   }
-
-  public update() {}
 }
