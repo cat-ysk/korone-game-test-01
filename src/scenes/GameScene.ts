@@ -17,10 +17,7 @@ export class GameScene extends Phaser.Scene {
   public preload() {
     this.load.image("loop", "assets/loop.png");
     this.load.image("obj", "assets/obj.png");
-    this.load.spritesheet("player", "assets/player.png", {
-      frameWidth: 32,
-      frameHeight: 32,
-    });
+    Player.preload(this);
   }
 
   public create() {
