@@ -1,5 +1,7 @@
 import Player from "../players/Player";
+
 import { CONST } from "../const";
+import { TextButton } from "../ui/TextButton";
 const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
   active: false,
   visible: false,
@@ -7,8 +9,11 @@ const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
 };
 
 export class GameScene extends Phaser.Scene {
-  private player: Player;
-  private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
+  private player1: Player;
+  private player2: Player;
+  private player3: Player;
+  clickCount: integer = 0;
+  clickButton: TextButton;
 
   constructor() {
     super(sceneConfig);
@@ -21,45 +26,40 @@ export class GameScene extends Phaser.Scene {
   }
 
   public create() {
-    this.cursorKeys = this.input.keyboard.createCursorKeys();
-    this.cameras.main.setBackgroundColor("#56BBFB");
-    this.make
-      .tileSprite({
-        x: 0,
-        y: CONST.screenHeight - 200,
-        key: "loop",
-        add: true,
-      })
-      .setOrigin(0);
-    this.player = new Player(this, 80, CONST.screenHeight - 80);
-    this.physics.world.enable([this.player]);
-    this.player.body.setCollideWorldBounds(true);
+    this.cameras.main.setBackgroundColor("#69aB6B");
+
+    // this.make
+    //   .tileSprite({
+    //     x: 0,
+    //     y: CONST.screenHeight - 200,
+    //     key: "loop",
+    //     add: true,
+    //   })
+    //   .setOrigin(0);
+    this.player1 = new Player(this, 80, CONST.screenHeight - 80);
+    this.player2 = new Player(this, 120, CONST.screenHeight - 80);
+    this.player3 = new Player(this, 180, CONST.screenHeight - 80);
+    this.player2.scale = 2;
+    this.player3.scale = 3;
+    this.physics.world.enable([this.player1, this.player2, this.player3]);
+    // this.player1.body.setCollideWorldBounds(true);
+
+    this.clickButton = new TextButton(
+      this,
+      100,
+      100,
+      "テストボタン",
+      { fill: "#0f0" },
+      () => {
+        this.clickCount += 1;
+      }
+    );
+    this.add.existing(this.clickButton);
   }
 
   public update() {
-    this.player.body.velocity.x = 0;
-
-    if (this.cursorKeys.up.isDown) {
-      this.player.body.velocity.y = -150;
-    } else if (this.cursorKeys.down.isDown) {
-      this.player.body.velocity.y = 150;
-    }
-
-    if (this.cursorKeys.right.isDown) {
-      this.player.body.velocity.x = 100;
-      this.player.flipX = false;
-      this.player.anims.play("right", true);
-    } else if (this.cursorKeys.left.isDown) {
-      this.player.body.velocity.x = -100;
-      this.player.flipX = true;
-      this.player.anims.play("left", true);
-    } else {
-      this.player.anims.stop();
-      if (this.player.getBounds().bottom < CONST.screenHeight) {
-        this.player.setFrame(1);
-      } else {
-        this.player.setFrame(0);
-      }
-    }
+    this.player1.update();
+    this.player2.update();
+    this.player3.update();
   }
 }

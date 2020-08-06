@@ -24,7 +24,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       gravity: {
         y: CONST.gravity,
       },
-      debug: true,
+      debug: false,
     },
   },
   scene: [TitleScene, GameScene],

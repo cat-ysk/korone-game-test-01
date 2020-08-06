@@ -9,6 +9,6 @@ export const CONST = {
   screenWidth: 400,
   screenHeight: 300,
   zoom: 2,
-  gravity: 300,
+  gravity: 0,
   pixelFont10: "Pixel10R",
 };
